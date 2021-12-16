@@ -2,7 +2,6 @@ import RPi.GPIO as GPIO
 from datetime import datetime
 
 GPIO.setwarnings(False)
-GPIO.setmode(GPIO.BOARD)
 
 #Gets binary value
 def getBinary(pin):
@@ -56,7 +55,11 @@ def getBinary(pin):
 
 	return binary
 
-def get_ir_remote_data(pin):
+def get_ir_remote_data(pin, mode = 'BOARD'):  #default mode BOARD
+	if mode == 'BCM':
+		GPIO.setmode(GPIO.BCM)
+	else:
+		GPIO.setmode(GPIO.BOARD)
 	binaryValue = getBinary(pin)
 	tmpB2 = int(str(binaryValue),2) #Tempary propper base 2
 	return hex(tmpB2)
